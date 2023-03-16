@@ -11,11 +11,8 @@
 
 using namespace ns3;
 
-
-int count = 0;
 int human = 150;
 double time_simu = 200.0;
-bool risk = false;
 std::list<int> myList;
 
 void
@@ -31,12 +28,10 @@ CalculateDistance (Ptr<Node> infected, Ptr<Node> normal, double time, int i, int
     int gotcha = rand() % 10+1;
     if(gotcha == 1){ // 10 per 100 to infected
         myList.push_back(i);
-        count++;
     }
   }
   else if((distance < 20) & (i%2 != 0)){ // without mask
     myList.push_back(i);
-    count++;
   }
   if((i == human-1) & (time == time_simu)){
     myList.sort();
@@ -96,7 +91,7 @@ main(int argc, char* argv[])
     TypeId tid = TypeId::LookupByName ("ns3::UdpSocketFactory");
 
     
-    address.SetBase("10.1.1.0", "255.255.255.0");
+    address.SetBase("192.168.1.0", "255.255.255.0");
     interface = address.Assign (devices);
 
     //Sent
@@ -126,7 +121,7 @@ main(int argc, char* argv[])
 
     }
 
-    AnimationInterface anim ("test.xml");
+    AnimationInterface anim ("AL-2.xml");
     for (int i = 1; i <= human-1; i++){
         if(i%2 == 0){
             anim.UpdateNodeColor(node.Get(i), 0,255,0);
